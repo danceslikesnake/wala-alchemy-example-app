@@ -4,7 +4,7 @@
  */
 
 import React, {Component} from 'react';
-import {ScrollView, StatusBar, Animated} from 'react-native';
+import {Animated} from 'react-native';
 import {
   Container,
   Logomark,
@@ -12,47 +12,45 @@ import {
   ImageContainer,
   AUI_TYPOGRAPHY,
   AUI_COLORS,
-  AUI_FUNCTIONS,
   Spacer,
   BodyText,
-  GradientContainer,
-  AUI_LAYOUT,
-  SmallDisplay,
   Subheadline,
   CallToActionButton, AUI_CONSTANTS, Divider, TileActions, CaptionEmphasis
 } from 'alchemyUI';
-import HomeNav from './HomeNav';
 
 type Props = {};
 
+const scrollRange = 150;
+
 export default class Home extends Component<Props> {
-  static navigationOptions = ({ navigation }) => {
-    return {
-      header: props => <HomeNav {...props} />
-    }
-  };
 
   constructor(props) {
     super(props);
+
+    this.animatedValue = new Animated.Value(0);
   }
 
   componentWillMount() {
     this.props.navigation.setParams({
-      scrollPos: 0
+      bgColor: this.animatedValue.interpolate({
+        inputRange: [0, scrollRange],
+        outputRange: ['transparent', AUI_COLORS.WalaTeal.hex],
+        extrapolate: 'clamp',
+      }),
+      logoOpacity: this.animatedValue.interpolate({
+        inputRange: [0, scrollRange],
+        outputRange: [0, 1],
+      })
     });
   }
 
-  handleScroll = (event: Object) => {
-    this.props.navigation.setParams({
-      scrollPos: event.nativeEvent.contentOffset.y
-    });
-  };
-
   render() {
     return (
-      <ScrollView
-        onScroll={this.handleScroll}
-        scrollEventThrottle={16}
+      <Animated.ScrollView
+        onScroll={Animated.event(
+          [{ nativeEvent: { contentOffset: { y: this.animatedValue } } }], // <-- tadaaa
+        )}
+        scrollEventThrottle={2}
       >
         <ImageContainer source={require('../../../resources/img/Home-Screen-BG.png')}>
           <Container alignItems={'center'} variation={'card'}>
@@ -80,54 +78,6 @@ export default class Home extends Component<Props> {
         <Spacer />
         <Divider size={'large'} />
         <Spacer dense />
-        <Subheadline alignCenter color={AUI_COLORS.ScampiPurple.shade1}>Elements</Subheadline>
-        <Spacer dense />
-        <CaptionEmphasis alignCenter style={{marginHorizontal: AUI_CONSTANTS.gridBase}}>A quick explainer here</CaptionEmphasis>
-        <Spacer />
-        <Spacer dense />
-        <Divider />
-        <TileActions
-          tiles={[
-            {
-              label: 'Colors',
-              onPress: () => {},
-              iconName: 'palette',
-              iconSet: 'font-awesome'
-            },
-            {
-              label: 'Content',
-              onPress: () => {},
-              iconName: 'newspaper',
-              iconSet: 'font-awesome'
-            },
-            {
-              label: 'Icons',
-              onPress: () => {},
-              iconName: 'info-circle',
-              iconSet: 'font-awesome-regular'
-            },
-            {
-              label: 'Layout',
-              onPress: () => {},
-              iconName: 'th',
-              iconSet: 'font-awesome-regular'
-            },
-            {
-              label: 'Logos',
-              onPress: () => {},
-              iconName: 'draw-polygon',
-              iconSet: 'font-awesome'
-            },
-            {
-              label: 'Typography',
-              onPress: () => {},
-              iconName: 'font',
-              iconSet: 'font-awesome'
-            }
-          ]}
-          rowCount={3}
-        />
-        <Spacer />
         <Subheadline alignCenter color={AUI_COLORS.ScampiPurple.shade1}>Compounds</Subheadline>
         <Spacer dense />
         <CaptionEmphasis alignCenter style={{marginHorizontal: AUI_CONSTANTS.gridBase}}>A quick explainer here</CaptionEmphasis>
@@ -138,38 +88,87 @@ export default class Home extends Component<Props> {
           tiles={[
             {
               label: 'Accounts',
-              onPress: () => {},
+              onPress: () => {this.props.navigation.navigate('Accounts')},
               iconName: 'accounts'
             },
             {
               label: 'Connections',
-              onPress: () => {},
+              onPress: () => {this.props.navigation.navigate('Connections')},
               iconName: 'connections'
             },
             {
               label: 'Earn',
-              onPress: () => {},
+              onPress: () => {this.props.navigation.navigate('Earn')},
               iconName: 'dala-icon'
             },
             {
               label: 'Market',
-              onPress: () => {},
+              onPress: () => {this.props.navigation.navigate('Market')},
               iconName: 'market'
             },
             {
               label: 'Timeline',
-              onPress: () => {},
+              onPress: () => {this.props.navigation.navigate('Timeline')},
               iconName: 'timeline'
             },
             {
               label: 'Universal',
-              onPress: () => {},
-              iconName: 'accounts'
+              onPress: () => {this.props.navigation.navigate('Universal')},
+              iconName: 'globe',
+              iconSet: 'font-awesome-regular'
             }
           ]}
           rowCount={3}
         />
-      </ScrollView>
+        <Spacer />
+        <Subheadline alignCenter color={AUI_COLORS.ScampiPurple.shade1}>Elements</Subheadline>
+        <Spacer dense />
+        <CaptionEmphasis alignCenter style={{marginHorizontal: AUI_CONSTANTS.gridBase}}>A quick explainer here</CaptionEmphasis>
+        <Spacer />
+        <Spacer dense />
+        <Divider />
+        <TileActions
+          tiles={[
+            {
+              label: 'Colors',
+              onPress: () => {this.props.navigation.navigate('Colors')},
+              iconName: 'palette',
+              iconSet: 'font-awesome'
+            },
+            {
+              label: 'Content',
+              onPress: () => {this.props.navigation.navigate('Content')},
+              iconName: 'newspaper',
+              iconSet: 'font-awesome'
+            },
+            {
+              label: 'Icons',
+              onPress: () => {this.props.navigation.navigate('Icons')},
+              iconName: 'info-circle',
+              iconSet: 'font-awesome-regular'
+            },
+            {
+              label: 'Layout',
+              onPress: () => {this.props.navigation.navigate('Layout')},
+              iconName: 'th',
+              iconSet: 'font-awesome-regular'
+            },
+            {
+              label: 'Logos',
+              onPress: () => {this.props.navigation.navigate('Logos')},
+              iconName: 'draw-polygon',
+              iconSet: 'font-awesome'
+            },
+            {
+              label: 'Typography',
+              onPress: () => {this.props.navigation.navigate('Typography')},
+              iconName: 'font',
+              iconSet: 'font-awesome'
+            }
+          ]}
+          rowCount={3}
+        />
+      </Animated.ScrollView>
     );
   }
 }

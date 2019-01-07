@@ -1,12 +1,10 @@
 import React, {Component} from 'react';
-import PropTypes from 'prop-types';
-import {StyleSheet, TouchableNativeFeedback, ScrollView, Animated, View} from 'react-native';
+import {StyleSheet, TouchableNativeFeedback, TouchableOpacity, Animated} from 'react-native';
 import {
   Container,
-  Headline,
+  GradientContainer,
+  Logomark,
   AUI_COLORS,
-  AUI_TYPOGRAPHY,
-  AUI_LAYOUT,
   AUI_CONSTANTS,
   AUI_FUNCTIONS, SmallDisplay
 } from 'alchemyUI';
@@ -14,44 +12,43 @@ import {
 export default class HomeNav extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      bgColorShow: false
-    };
-  }
-
-  componentDidUpdate(prevProps: Readonly<P>, prevState: Readonly<S>, snapshot: SS): void {
-    //console.warn(this.props.navigation.state.routes[0].params.scrollPos);
-    if(this.props.navigation.state.routes[0].params.scrollPos > 100) {
-      if(!this.state.bgColorShow) {
-        this.setState({
-          bgColorShow: true
-        });
-      }
-    } else {
-      if(this.state.bgColorShow) {
-        this.setState({
-          bgColorShow: false
-        });
-      }
-    }
   }
 
   render() {
+    let bgColor = 'transparent';
+    let opacity = 0;
+    if(this.props.state.params) {
+        bgColor = this.props.state.params.bgColor;
+        opacity = this.props.state.params.logoOpacity;
+    }
     return (
-      <Animated.View style={[localStyles.floatingNav, this.state.bgColorShow ? localStyles.navStateOpaque : localStyles.navStateTransparent]}>
-        <TouchableNativeFeedback onPress={() => {}}>
-          <Container alignItems={'center'} justifyContent={'center'} style={localStyles.headerButton}>
-            <SmallDisplay color={'white'}>Github</SmallDisplay>
-          </Container>
-        </TouchableNativeFeedback>
-        <Container isFlex />
-        <TouchableNativeFeedback onPress={() => {}}>
-          <Container alignItems={'center'} justifyContent={'center'} style={localStyles.headerButton}>
-            <SmallDisplay color={'white'}>Docs</SmallDisplay>
-          </Container>
-        </TouchableNativeFeedback>
-      </Animated.View>
+      <Container style={[localStyles.floating]}>
+        <Animated.View style={[localStyles.nav, {backgroundColor: bgColor}]}>
+          <TouchableOpacity onPress={() => {}}>
+            <Container justifyContent={'center'} style={localStyles.headerButton}>
+              <SmallDisplay color={'white'}>Github</SmallDisplay>
+            </Container>
+          </TouchableOpacity>
+          <Animated.View style={{flex: 1, alignItems: 'center', justifyContent: 'center', opacity: opacity}}>
+            <Logomark variation={'alchemyWhite'} imgHeight={26} />
+          </Animated.View>
+          <TouchableOpacity onPress={() => {}}>
+            <Container alignItems={'flex-end'} justifyContent={'center'} style={localStyles.headerButton}>
+              <SmallDisplay color={'white'}>Docs</SmallDisplay>
+            </Container>
+          </TouchableOpacity>
+        </Animated.View>
+        <Animated.View style={{opacity: opacity}}>
+          <GradientContainer
+            colors={[
+              AUI_COLORS.getRgbaFromHex(AUI_COLORS.ScampiPurple.shade1, 0.5),
+              AUI_COLORS.getRgbaFromHex(AUI_COLORS.ScampiPurple.shade1, 0)
+            ]}
+            gradientDirection={'vertical'}
+            style={{height: 4}}
+          />
+        </Animated.View>
+      </Container>
     );
   }
 }
@@ -61,14 +58,16 @@ HomeNav.defaultProps = {};
 HomeNav.propTypes = {};
 
 const localStyles = StyleSheet.create({
-  floatingNav: {
+  floating: {
     position: 'absolute',
     top: 0,
     left: 0,
-    height: AUI_FUNCTIONS.gridBaseMultiplier(4),
-    width: '100%',
     zIndex: 100,
-    flexDirection: 'row'
+    width: '100%'
+  },
+  nav: {
+    flexDirection: 'row',
+    height: AUI_FUNCTIONS.gridBaseMultiplier(4),
   },
   navStateOpaque: {
     elevation: 5,
@@ -79,6 +78,7 @@ const localStyles = StyleSheet.create({
   },
   headerButton: {
     height: AUI_FUNCTIONS.gridBaseMultiplier(4),
-    paddingHorizontal: AUI_CONSTANTS.gridBase
+    paddingHorizontal: AUI_CONSTANTS.gridBase,
+    width: 78
   }
 });

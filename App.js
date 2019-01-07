@@ -6,19 +6,9 @@
 import React, {Component} from 'react';
 import {StatusBar} from 'react-native';
 import {AUI_COLORS, Container} from "alchemyUI";
-import { createStackNavigator, createAppContainer } from 'react-navigation';
+import { createAppContainer } from 'react-navigation';
 
-import Home from './src/components/Home/Home';
-import HomeNav from './src/components/Home/HomeNav';
-
-const RootStack = createStackNavigator(
-  {
-    Home: Home,
-  },
-  {
-    initialRouteName: 'Home',
-  }
-);
+import {RootStack} from './src/navigation/navigation';
 
 const AppContainer = createAppContainer(RootStack);
 
