@@ -59,7 +59,7 @@ export default class Home extends Component<Props> {
             <Logomark variation={'alchemyWhite'} imgHeight={65} />
             <Spacer dense />
             <Headline color={'white'} style={{fontFamily: AUI_TYPOGRAPHY.Poppins.medium}}>alchemy</Headline>
-            <BodyText color={'white'}>React Native UI Kit</BodyText>
+            <BodyText color={'white'}>React Native UI Kit Showcase</BodyText>
           </Container>
           <Spacer dense />
           <ImageContainer
