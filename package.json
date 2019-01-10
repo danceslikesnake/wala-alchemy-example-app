@@ -4,7 +4,10 @@
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
-    "test": "jest"
+    "test": "jest",
+    "createVersionPatch": "npm version patch && git push && git push --tags",
+    "createVersionMinor": "npm version minor && git push && git push --tags",
+    "createVersionMajor": "npm version major && git push && git push --tags"
   },
   "dependencies": {
     "alchemyUI": "git+ssh://git@github.com/GetWala/alchemy-ui.git#semver:1.0.0",
