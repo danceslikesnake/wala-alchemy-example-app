@@ -58,7 +58,7 @@ export default class Home extends Component<Props> {
             <Spacer dense />
             <Logomark variation={'alchemyWhite'} imgHeight={65} />
             <Spacer dense />
-            <Headline color={'white'} style={{fontFamily: AUI_TYPOGRAPHY.Poppins.medium}}>alchemy</Headline>
+            <Headline color={'white'} style={{fontFamily: AUI_TYPOGRAPHY.Poppins.medium, marginBottom: -4}}>alchemy</Headline>
             <BodyText color={'white'}>React Native UI Kit Showcase</BodyText>
           </Container>
           <Spacer dense />
@@ -70,17 +70,16 @@ export default class Home extends Component<Props> {
         <Spacer dense />
         <Container variation={'card'}>
           <CallToActionButton
-            onPress={() => {}}
+            onPress={() => this.props.navigation.navigate('ExampleApp')}
             label={'View the Example App'}
             addArrow
           />
         </Container>
         <Spacer />
         <Divider size={'large'} />
-        <Spacer dense />
+        <Spacer />
         <Subheadline alignCenter color={AUI_COLORS.ScampiPurple.shade1}>Compounds</Subheadline>
-        <Spacer dense />
-        <CaptionEmphasis alignCenter style={{marginHorizontal: AUI_CONSTANTS.gridBase}}>A quick explainer here</CaptionEmphasis>
+        <CaptionEmphasis alignCenter style={{marginHorizontal: AUI_CONSTANTS.gridBase}}>As in alchemy, Compounds are composed of a mixture of Elements. These are high level UI components.</CaptionEmphasis>
         <Spacer />
         <Spacer dense />
         <Divider />
@@ -123,7 +122,7 @@ export default class Home extends Component<Props> {
         <Spacer />
         <Subheadline alignCenter color={AUI_COLORS.ScampiPurple.shade1}>Elements</Subheadline>
         <Spacer dense />
-        <CaptionEmphasis alignCenter style={{marginHorizontal: AUI_CONSTANTS.gridBase}}>A quick explainer here</CaptionEmphasis>
+        <CaptionEmphasis alignCenter style={{marginHorizontal: AUI_CONSTANTS.gridBase}}>Elements are the basic and most indivisible building blocks for UI. They can be used on their own or combined to create Compounds.</CaptionEmphasis>
         <Spacer />
         <Spacer dense />
         <Divider />

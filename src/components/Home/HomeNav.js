@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {StyleSheet, TouchableNativeFeedback, TouchableOpacity, Animated} from 'react-native';
+import {StyleSheet, TouchableNativeFeedback, TouchableOpacity, Animated, Linking} from 'react-native';
 import {
   Container,
   GradientContainer,
@@ -14,6 +14,16 @@ export default class HomeNav extends Component {
     super(props);
   }
 
+  openUrl = (url) => {
+    Linking.canOpenURL(url).then(supported => {
+      if (supported) {
+        Linking.openURL(url);
+      } else {
+        console.warn("Don't know how to open URI: " + url);
+      }
+    });
+  };
+
   render() {
     let bgColor = 'transparent';
     let opacity = 0;
@@ -24,7 +34,7 @@ export default class HomeNav extends Component {
     return (
       <Container style={[localStyles.floating]}>
         <Animated.View style={[localStyles.nav, {backgroundColor: bgColor}]}>
-          <TouchableOpacity onPress={() => {}}>
+          <TouchableOpacity onPress={() => {this.openUrl('https://github.com/GetWala/alchemy-ui')}}>
             <Container justifyContent={'center'} style={localStyles.headerButton}>
               <SmallDisplay color={'white'}>Github</SmallDisplay>
             </Container>
@@ -32,7 +42,7 @@ export default class HomeNav extends Component {
           <Animated.View style={{flex: 1, alignItems: 'center', justifyContent: 'center', opacity: opacity}}>
             <Logomark variation={'alchemyWhite'} imgHeight={26} />
           </Animated.View>
-          <TouchableOpacity onPress={() => {}}>
+          <TouchableOpacity onPress={() => {this.openUrl('https://alchemy.gitbook.io/docs/')}}>
             <Container alignItems={'flex-end'} justifyContent={'center'} style={localStyles.headerButton}>
               <SmallDisplay color={'white'}>Docs</SmallDisplay>
             </Container>

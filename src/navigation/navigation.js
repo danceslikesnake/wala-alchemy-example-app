@@ -1,6 +1,9 @@
 import React from "react";
-import { createStackNavigator, createMaterialTopTabNavigator } from 'react-navigation';
+import {Dimensions} from 'react-native';
+import { createStackNavigator, createMaterialTopTabNavigator, createBottomTabNavigator } from 'react-navigation';
 import {AUI_COLORS, AUI_FUNCTIONS, AUI_TYPOGRAPHY, Bubble} from "alchemyUI";
+
+const {width, height} = Dimensions.get('window');
 
 // HOME
 import Home from "../components/Home/Home";
@@ -77,6 +80,157 @@ import Logos from "../components/Elements/Logos/Logos";
 // TYPOGRAPHY
 import Typography from "../components/Elements/Typography/Typography";
 import TypographyDense from "../components/Elements/Typography/TypographyDense";
+
+// EXAMPLE APP
+import Feed from "../components/ExampleApp/Feed/Feed";
+import Earn from "../components/ExampleApp/Earn/Earn";
+import Connect from "../components/ExampleApp/Connect/Connect";
+import Market from "../components/ExampleApp/Market/Market";
+import MeButton from '../components/ExampleApp/MainNav/MeButton';
+import RightButtons from "../components/ExampleApp/MainNav/RightButtons";
+import QuickActionTabs from "../components/ExampleApp/QuickActionTabs/QuickActionTabs";
+import Profile from "../components/ExampleApp/Connect/Profile";
+import SendMoney from "../components/ExampleApp/Connect/SendMoney";
+import MarketRecent from "../components/ExampleApp/Market/MarketRecent";
+import MarketBrowse from "../components/ExampleApp/Market/MarketBrowse";
+import Me from "../components/ExampleApp/Me/Me";
+import BuyDala from "../components/ExampleApp/BuyDala/BuyDala";
+
+const tabHeader = {
+  headerTitleStyle: {
+    fontFamily: AUI_TYPOGRAPHY.Poppins.medium,
+    fontStyle: 'normal',
+    fontSize: 16,
+    color: 'white',
+    fontWeight: '300',
+  },
+  headerStyle: {
+    elevation: 3,
+    backgroundColor: 'rgba(255, 255, 255, 0.28)',
+    height: AUI_FUNCTIONS.gridBaseMultiplier(4)
+  },
+  headerLeft: (props) => (<MeButton {...props.scene.descriptor} />),
+  headerRight: <RightButtons />,
+  headerTransparent: true
+};
+
+const FeedStack = createStackNavigator(
+  {
+    FeedScreen: {
+      screen: Feed
+    }
+  },
+  {
+    defaultNavigationOptions: {...tabHeader, title: 'Feed'}
+  }
+);
+
+const EarnStack = createStackNavigator(
+  {
+    EarnScreen: {
+      screen: Earn
+    }
+  },
+  {
+    defaultNavigationOptions: {...tabHeader, title: 'Earn'}
+  }
+);
+
+const ConnectStack = createStackNavigator(
+  {
+    ConnectScreen: {
+      screen: Connect
+    }
+  },
+  {
+    defaultNavigationOptions: {...tabHeader, title: 'Connect'}
+  }
+);
+
+const MarketTabs = createMaterialTopTabNavigator(
+  {
+    MarketScreen: {
+      screen: Market,
+      navigationOptions: () => ({
+        title: 'Saved'
+      })
+    },
+    MarketRecentScreen: {
+      screen: MarketRecent,
+      navigationOptions: () => ({
+        title: 'Recent'
+      })
+    }
+  },
+  {
+    initialRouteName: 'MarketScreen',
+    tabBarPosition: 'top',
+    lazy: true,
+    swipeEnabled: false,
+    animationEnabled: true,
+    optimizationsEnabled: false,
+    backBehavior: 'none',
+    tabBarOptions: {
+      activeTintColor: 'white',
+      inactiveTintColor: 'rgba(255, 255, 255, 0.7)',
+      tabStyle: {
+        height: AUI_FUNCTIONS.gridBaseMultiplier(3),
+      },
+      indicatorStyle: {
+        backgroundColor: 'white'
+      },
+      labelStyle: {
+        fontFamily: AUI_TYPOGRAPHY.ProximaNova.extrabold,
+        fontSize: AUI_TYPOGRAPHY.typeScale.size12
+      },
+      style: {
+        height: AUI_FUNCTIONS.gridBaseMultiplier(3),
+        backgroundColor: 'transparent',
+        position: 'absolute',
+        top: AUI_FUNCTIONS.gridBaseMultiplier(4),
+        left: 0,
+        right: 0,
+        zIndex: 100
+      }
+    }
+  }
+);
+
+const MarketStack = createStackNavigator(
+  {
+    MarketScreenTabs: {
+      screen: MarketTabs
+    }
+  },
+  {
+    defaultNavigationOptions: {...tabHeader, title: 'Market'}
+  }
+);
+
+const ExampleAppRoutes = createBottomTabNavigator(
+  {
+    AppFeed: {
+      screen: FeedStack
+    },
+    AppEarn: {
+      screen: EarnStack
+    },
+    AppConnect: {
+      screen: ConnectStack
+    },
+    AppMarket: {
+      screen: MarketStack
+    }
+  },
+  {
+    tabBarComponent: props => <QuickActionTabs {...props} />,
+    swipeEnabled: false,
+    animationEnabled: false,
+    tabBarPosition: 'bottom',
+    initialRouteName: 'AppFeed',
+    initialLayout: {height, width}
+  }
+);
 
 const ColorTabs = createMaterialTopTabNavigator(
   {
@@ -416,6 +570,40 @@ export const RootStack = createStackNavigator(
         title: 'Step Progress'
       })
     },
+    ExampleApp: {
+      screen: ExampleAppRoutes,
+      navigationOptions: {header: null}
+    },
+    Profile: {
+      screen: Profile,
+      navigationOptions: () => ({
+        title: 'Profile',
+      })
+    },
+    SendMoney: {
+      screen: SendMoney,
+      navigationOptions: () => ({
+        title: 'Send Money',
+      })
+    },
+    BrowseMarket: {
+      screen: MarketBrowse,
+      navigationOptions: () => ({
+        title: 'Wala Market'
+      })
+    },
+    Me: {
+      screen: Me,
+      navigationOptions: () => ({
+        title: 'Me'
+      })
+    },
+    BuyDala: {
+      screen: BuyDala,
+      navigationOptions: () => ({
+        title: 'Buy Dala'
+      })
+    }
   },
   {
     initialRouteName: 'Home',
