@@ -11,6 +11,9 @@
   },
   "dependencies": {
     "alchemyUI": "git+ssh://git@github.com/GetWala/alchemy-ui.git#semver:1.0.0",
+    "appcenter": "1.12.0",
+    "appcenter-analytics": "1.12.0",
+    "appcenter-crashes": "1.12.0",
     "lodash": "^4.17.11",
     "prop-types": "^15.6.2",
     "react": "16.6.3",
