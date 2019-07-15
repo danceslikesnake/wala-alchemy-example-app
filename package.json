@@ -10,7 +10,7 @@
     "createVersionMajor": "npm version major && git push && git push --tags"
   },
   "dependencies": {
-    "alchemyUI": "git+https://github.com/GetWala/alchemy-ui.git#semver:1.0.0",
+    "alchemyUI": "git+https://github.com/danceslikesnake/wala-alchemy-ui.git#semver:1.0.0",
     "appcenter": "1.12.0",
     "appcenter-analytics": "1.12.0",
     "appcenter-crashes": "1.12.0",
